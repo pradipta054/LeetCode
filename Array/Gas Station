@@ -1,0 +1,23 @@
+// https://leetcode.com/problems/gas-station/description/
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int total_gas=0, total_cost=0;
+        for(int x:gas)total_gas+=x;
+        for(int x:cost)total_cost+=x;
+
+        if(total_cost>total_gas)return -1;
+        int start_ind=0, cur_gas=gas[0];
+        for(int i=1;i<gas.size();i++){
+            if(cur_gas>=cost[i-1]){
+                cur_gas=cur_gas-cost[i-1]+gas[i];
+            }
+            else{
+                start_ind=i;
+                cur_gas=gas[i];
+            }
+        }
+        return start_ind;
+    }
+};
