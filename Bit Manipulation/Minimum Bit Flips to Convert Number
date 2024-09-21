@@ -1,0 +1,14 @@
+// https://leetcode.com/problems/minimum-bit-flips-to-convert-number/
+
+class Solution {
+public:
+    int minBitFlips(int start, int goal) {
+        int cnt=0;
+        int x=start^goal; //if bits are not same , then in x it will be 1(need to flip)
+        while(x){
+            x&=(x-1);
+            cnt++;
+        }
+        return cnt;
+    }
+};
