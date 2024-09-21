@@ -1,0 +1,23 @@
+// https://leetcode.com/problems/minimum-time-difference/
+
+#define pb push_back
+class Solution {
+public:
+    int findMinDifference(vector<string>& timePoints) {
+        int n=timePoints.size();
+        vector<int> minutes;
+        for(auto time:timePoints) {
+            string hr=time.substr(0,2);  //HR
+            string minute=time.substr(3); //MM
+            int time_in_minute=stoi(hr)*60 + stoi(minute);
+
+            minutes.pb(time_in_minute); //convert to minute
+        }
+        sort(minutes.begin(), minutes.end());
+        int ans=INT_MAX;
+        for(int i=1;i<n;i++){
+            ans=min(ans, minutes[i]-minutes[i-1]);
+        }
+        return min(ans, 24*60-minutes[n-1]+minutes[0]);
+    }
+};
