@@ -1,0 +1,34 @@
+// https://leetcode.com/problems/xor-queries-of-a-subarray/
+
+class Solution {
+public:
+    vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
+        /*
+        Approach:
+        query= [i,j]
+            0----------->j
+                   i<---------------n-1
+            0----------------------->n-1     
+
+            0->i and j->n-1 will be 0 and only i->j will remain;  
+        */
+        int n=arr.size();
+        vector<int> left(n), right(n);
+        int x=0, y=0;
+        for(int i=0;i<n;i++){
+            x^=arr[i];
+            left[i]=x;  //from 0->i (+ve x->)
+
+            y^=arr[n-1-i];
+            right[n-1-i]=y; //from n-1->i (-ve <-x)
+        }
+        vector<int> ans;
+        for(auto p:queries){
+            int left_ind=p[0];
+            int right_ind=p[1];
+            ans.push_back(left[right_ind]^right[left_ind]^left[n-1]);
+        }
+        
+        return ans;
+    }
+};
