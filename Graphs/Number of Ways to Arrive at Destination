@@ -1,0 +1,39 @@
+// https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/
+
+class Solution {
+public:
+    int countPaths(int n, vector<vector<int>>& roads) {
+        
+        vector<pair<int,long>> adj[n];
+        for(auto p:roads){
+            adj[p[0]].push_back({p[1],p[2]});
+            adj[p[1]].push_back({p[0],p[2]});
+        }
+        priority_queue<pair<long,int> , vector<pair<long,int>>,greater<pair<long,int>> > pq;
+        vector<long> dist(n,LONG_MAX);
+        vector<long> ways(n,0);
+        dist[0]=0;
+        ways[0]=1;
+        
+        long mod=1e9+7;
+        pq.push({0,0});
+        while(!pq.empty()){
+            
+            auto p=pq.top();
+            pq.pop();
+            long wt=p.first;
+            int node=p.second;
+            for(auto ch:adj[node]){
+                if(wt+ch.second<dist[ch.first]){
+                    dist[ch.first]=wt+ch.second;
+                    pq.push({dist[ch.first],ch.first});
+                    ways[ch.first]=ways[node];
+                }
+                else if(wt+ch.second==dist[ch.first]){
+                    ways[ch.first]=(ways[ch.first]+ways[node])%mod;
+                }
+            }
+        }
+        return ways[n-1];
+    }
+};
