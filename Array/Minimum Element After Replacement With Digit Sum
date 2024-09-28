@@ -1,0 +1,18 @@
+// Minimum Element After Replacement With Digit Sum
+
+class Solution {
+public:
+    int minElement(vector<int>& nums) {
+        int ans=INT_MAX;
+        int sum=0;
+        for(auto n:nums){
+            sum=0;
+            while(n){
+                sum+=(n%10);
+                n/=10;
+            }
+            ans=min(ans, sum);
+        }
+        return ans;
+    }
+};
