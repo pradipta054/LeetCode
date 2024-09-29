@@ -1,0 +1,26 @@
+// https://leetcode.com/problems/count-of-substrings-containing-every-vowel-and-k-consonants-i//
+
+class Solution {
+public:
+    int countOfSubstrings(string word, int k) {
+        int n=word.size();
+        int cnt=0;
+        
+        for(int i=0;i<n;i++){
+            map<char, int> mp;
+            int con=0; //consonants
+            for(int j=i;j<n;j++){
+                if(word[j]=='a' || word[j]=='e' ||  word[j]=='i' ||  word[j]=='o' ||  word[j]=='u' ){
+                    mp[word[j]]++;
+                }
+                else{
+                    con++;
+                }
+                if(mp.size()==5 && con==k)cnt++;
+                
+                if(con>k)break;
+            }
+        }
+        return cnt;
+    }
+};
