@@ -1,0 +1,20 @@
+// https://leetcode.com/problems/check-if-array-pairs-are-divisible-by-k/
+
+class Solution {
+public:
+    bool canArrange(vector<int>& arr, int k) {
+        vector<int> remainder(k);
+        for(int n:arr){
+            remainder[(n%k + k)%k]++; // handle -ve number as well
+        }
+        
+        if(remainder[0]%2!=0)return false; //number directly divisible by k
+
+        for(int i=1; i<=k/2; i++){
+            int other_half= k-i;
+            if(remainder[i]!=remainder[other_half])return false;
+        }
+
+        return true;
+    }
+};
